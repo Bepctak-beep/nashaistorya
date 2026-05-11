@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Наша Історія — Живий Архів</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --ink: #12100a;
+            --pg: #f4ead5;
+            --pgd: #e5d5ae;
+            --cream: #fdf5e4;
+            --blue: #005bbb;
+            --yellow: #ffd700;
+            --gold: #c8913a;
+            --red: #8b2020;
+            --green: #1a6b4a;
+            --sepia: #7a5c2e;
+
+            --era-ancient: #8b6914;
+            --era-medieval: #5a3a7a;
+            --era-cossack: #1a6b4a;
+            --era-national: #8b2020;
+            --era-modern: #005bbb;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Crimson Pro', serif;
+            background-color: var(--pg);
+            color: var(--ink);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .brand { font-family: 'Playfair Display', serif; font-weight: 900; }
+
+        /* Header & Nav */
+        header {
+            background: var(--ink);
+            color: white;
+            padding: 15px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 3px solid var(--gold);
+        }
+        .flag-line {
+            height: 4px;
+            background: linear-gradient(to right, var(--blue) 50%, var(--yellow) 50%);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .nav-links { display: flex; gap: 15px; }
+        .nav-links a {
+            color: #ccc; text-decoration: none; font-size: 0.9rem; cursor: pointer;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--yellow); }
+        .user-badge {
+            background: var(--gold); color: var(--ink);
+            width: 35px; height: 35px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 0.8rem;
+        }
+
+        /* Pages */
+        .page { display: none; padding: 20px; max-width: 800px; margin: 0 auto; min-height: 80vh; }
+        .page.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Login */
+        #page-login {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.68)),
+                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/1200px-Euromaidan_collage.jpg') center/cover;
+            z-index: 200; display: none; align-items: center; justify-content: center;
+        }
+        #page-login.active { display: flex; }
+        .auth-card {
+            background: var(--cream); padding: 30px; border-radius: 8px; width: 90%; max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #ddd; }
+        .auth-tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; opacity: 0.5; }
+        .auth-tab.active { opacity: 1; border-bottom: 2px solid var(--gold); font-weight: bold; }
+
+        /* Buttons & Inputs */
+        .btn {
+            background: var(--ink); color: white; border: none; padding: 12px 20px;
+            cursor: pointer; border-radius: 4px; font-family: inherit; font-weight: 600;
+            transition: 0.3s; width: 100%; display: block; text-align: center; font-size: 1rem;
+        }
+        .btn:hover { background: var(--sepia); }
+        .btn-gold { background: var(--gold); color: var(--ink); }
+        .btn-gold:hover { background: #b07e2f; }
+        .btn-outline { background: transparent; border: 1px solid var(--ink); color: var(--ink); }
+        .btn-outline:hover { background: var(--pgd); }
+        .btn-sm { padding: 6px 14px; font-size: 0.85rem; width: auto; display: inline-block; }
+
+        input, textarea, select {
+            width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc;
+            border-radius: 4px; font-family: inherit; font-size: 1rem;
+            background: white;
+        }
+        textarea { min-height: 80px; resize: vertical; }
+
+        /* Home Hero */
+        .hero {
+            background: var(--blue); color: white; padding: 40px 25px; border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        .hero h2 { font-size: 2.2rem; margin-bottom: 8px; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: white; padding: 15px; border-radius: 8px; text-align: center; border-bottom: 4px solid var(--gold); }
+        .stat-val { display: block; font-size: 1.5rem; font-weight: bold; color: var(--blue); }
+        .stat-lbl { font-size: 0.8rem; text-transform: uppercase; opacity: 0.7; }
+
+        /* Timeline */
+        .timeline { position: relative; padding-left: 30px; margin-top: 20px; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 0; width: 4px; height: 100%;
+            background: var(--pgd); border-radius: 2px;
+        }
+        .event-card {
+            background: white; border-radius: 8px; padding: 20px; margin-bottom: 25px;
+            position: relative; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .event-card:hover { transform: translateX(5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+        .event-card::after {
+            content: ''; position: absolute; left: -38px; top: 25px; width: 16px; height: 16px;
+            background: var(--gold); border-radius: 50%; border: 4px solid var(--pg);
+        }
+        .event-year { font-weight: bold; color: var(--gold); font-size: 1.2rem; }
+        .event-era {
+            display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem;
+            color: white; margin-left: 10px; vertical-align: middle;
+        }
+        .event-detail { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee; font-style: italic; color: var(--sepia); }
+        .event-detail.active { display: block; }
+        .filters { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+        .filter-btn {
+            padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; cursor: pointer;
+            border: 1px solid var(--pgd); background: white; font-family: inherit; transition: 0.2s;
+        }
+        .filter-btn.active { background: var(--ink); color: white; border-color: var(--ink); }
+
+        /* Quiz */
+        .quiz-container { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); }
+        .progress-bar { height: 8px; background: #eee; border-radius: 4px; margin: 20px 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--blue); width: 0%; transition: 0.5s; }
+        .quiz-opts { display: grid; gap: 10px; margin: 20px 0; }
+        .opt-btn {
+            padding: 14px 18px; text-align: left; border: 2px solid #eee; border-radius: 8px;
+            cursor: pointer; background: var(--cream); font-family: inherit; font-size: 1rem;
+            transition: 0.2s;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: var(--gold); }
+        .opt-btn.correct { background: #d4edda; border-color: var(--green); }
+        .opt-btn.wrong { background: #f8d7da; border-color: var(--red); }
+        .opt-btn:disabled { cursor: default; }
+        .explanation { background: #e7f3ff; padding: 15px; border-radius: 8px; margin-top: 15px; display: none; border-left: 4px solid var(--blue); }
+
+        /* Glossary */
+        .glossary-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; margin-top: 15px; }
+        .gloss-card { background: white; padding: 15px; border-radius: 8px; border-left: 4px solid var(--blue); }
+        .gloss-term { font-weight: bold; color: var(--blue); margin-bottom: 5px; font-size: 1.1rem; }
+
+        /* Profile */
+        .profile-avatar {
+            background: var(--gold); color: var(--ink);
+            width: 80px; height: 80px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 2rem; margin: 0 auto 15px;
+        }
+
+        /* Admin */
+        #page-admin .auth-tabs { margin-bottom: 25px; }
+        .admin-list { list-style: none; padding: 0; }
+        .admin-list li { padding: 10px 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .admin-list li:last-child { border-bottom: none; }
+
+        /* Toast */
+        #toast {
+            position: fixed; bottom: 20px; right: 20px; padding: 14px 22px;
+            background: var(--ink); color: white; border-radius: 8px; z-index: 1000;
+            transform: translateY(120px); transition: 0.4s; font-size: 0.95rem;
+        }
+        #toast.show { transform: translateY(0); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 500; display: none;
+            align-items: center; justify-content: center;
+        }
+        .modal-overlay.open { display: flex; }
+        .modal { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 460px; }
+        .modal-btns { display: flex; gap: 10px; margin-top: 20px; }
+        .modal-btns .btn { width: auto; flex: 1; }
+
+        /* Event card image */
+        .ev-thumb {
+            width: 100px; height: 80px; object-fit: cover; border-radius: 6px;
+            flex-shrink: 0; display: block;
+        }
+        .ev-card-inner { display: flex; gap: 15px; align-items: flex-start; }
+        .ev-card-text  { flex: 1; min-width: 0; }
+        .ev-detail-img-wrap {
+            width: 100%; background: #f0ead8; border-radius: 10px;
+            margin-bottom: 14px; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 120px;
+        }
+        .ev-detail-img {
+            width: 100%; height: auto; max-height: 420px;
+            object-fit: contain; display: block;
+            border-radius: 10px;
+        }
+
+        /* Hero */
+        .hero {
+            background:
+                linear-gradient(rgba(0,60,130,0.82), rgba(0,60,130,0.82)),
+                url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg/1200px-80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg')
+                center/cover !important;
+        }
+
+        /* Glossary header image */
+        .gloss-header-img {
+            width: 100%; height: 140px; object-fit: cover; object-position: center 40%;
+            border-radius: 10px; margin: 15px 0 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .nav-links { gap: 8px; }
+            .nav-links a { font-size: 0.8rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .hero h2 { font-size: 1.7rem; }
+            .glossary-grid { grid-template-columns: 1fr; }
+            .ev-thumb { width: 75px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="flag-line"></div>
+
+<header id="main-header" style="display:none">
+    <nav>
+        <div class="brand" onclick="Router.go('home')" style="cursor:pointer; font-size:1.4rem;">Наша Історія</div>
+        <div class="nav-links">
+            <a onclick="Router.go('home')" id="link-home">Головна</a>
+            <a onclick="Router.go('timeline')" id="link-timeline">Хронологія</a>
+            <a onclick="Router.go('glossary')" id="link-glossary">Словник</a>
+            <a onclick="Router.go('quiz')" id="link-quiz">Тести</a>
+            <a onclick="Router.go('admin')" id="link-admin" style="display:none">Адмін</a>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px">
+            <div class="user-badge" id="user-initials" onclick="Router.go('profile')" style="cursor:pointer" title="Профіль">?</div>
+            <a onclick="Auth.logout()" style="color:#f8d7da; font-size:0.8rem; cursor:pointer">Вийти</a>
+        </div>
+    </nav>
+</header>
+
+<!-- ===== LOGIN ===== -->
+<section id="page-login" class="page active" style="background: linear-gradient(rgba(0,0,0,0.68),rgba(0,0,0,0.68)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/1200px-Euromaidan_collage.jpg') center/cover;">
+    <div class="auth-card">
+        <h2 style="text-align:center; margin-bottom:20px; color:var(--ink)">Вітаємо</h2>
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="Auth.toggleTab('login', this)">Увійти</div>
+            <div class="auth-tab" onclick="Auth.toggleTab('reg', this)">Реєстрація</div>
+        </div>
+        <div id="reg-fields" style="display:none">
+            <input type="text" id="auth-name" placeholder="Ваше ім'я">
+        </div>
+        <input type="email" id="auth-email" placeholder="Електронна пошта">
+        <input type="password" id="auth-pass" placeholder="Пароль">
+        <button class="btn" id="btn-auth-submit" onclick="Auth.submit()">Увійти</button>
+        <div style="text-align:center; margin:15px 0; font-size:0.8rem; opacity:0.5">АБО</div>
+        <button class="btn btn-outline" onclick="Auth.guest()">Продовжити як гість</button>
+        <p style="font-size:0.7rem; margin-top:20px; opacity:0.4; text-align:center">
+            Тестовий вхід: admin@ua / admin &nbsp;|&nbsp; user@ua / user
+        </p>
+    </div>
+</section>
+
+<!-- ===== HOME ===== -->
+<section id="page-home" class="page">
+    <div class="hero">
+        <h2 id="welcome-msg">Вітаємо!</h2>
+        <p>Продовжуйте вивчати видатні сторінки українського державотворення.</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <span class="stat-val" id="stat-events">0</span>
+            <span class="stat-lbl">Подій</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-val" id="stat-record">0%</span>
+            <span class="stat-lbl">Рекорд</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-val" id="stat-tries">0</span>
+            <span class="stat-lbl">Спроб</span>
+        </div>
+    </div>
+
+    <h3>Останні події</h3>
+    <div id="home-recent-events" class="timeline"></div>
+
+    <button class="btn btn-gold" onclick="Router.go('quiz')" style="margin-top:20px">Пройти тест</button>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section id="page-timeline" class="page">
+    <h2>Хронологія</h2>
+    <div class="filters" id="tl-filters">
+        <div class="filter-btn active" onclick="TL.filter('all', this)">Всі</div>
+        <div class="filter-btn" onclick="TL.filter('ancient', this)">Стародавній світ</div>
+        <div class="filter-btn" onclick="TL.filter('medieval', this)">Середньовіччя</div>
+        <div class="filter-btn" onclick="TL.filter('cossack', this)">Козацтво</div>
+        <div class="filter-btn" onclick="TL.filter('national', this)">Відродження</div>
+        <div class="filter-btn" onclick="TL.filter('modern', this)">Новітня</div>
+    </div>
+    <div id="timeline-list" class="timeline"></div>
+</section>
+
+<!-- ===== QUIZ ===== -->
+<section id="page-quiz" class="page">
+    <div id="quiz-intro">
+        <h2>Тестування</h2>
+        <p style="margin-top:10px">Перевір свої знання з історії України. Питання охоплюють епохи від Скіфії до сьогодення.</p>
+        <br>
+        <button class="btn btn-gold" onclick="Quiz.start()" style="width:auto; padding:14px 30px">Почати тест</button>
+    </div>
+
+    <div id="quiz-game" style="display:none" class="quiz-container">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.9rem">
+            <span id="quiz-counter">Питання 1 з 10</span>
+            <span id="quiz-score" style="font-weight:bold; color:var(--blue)">Вірно: 0</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="quiz-progress"></div></div>
+        <h3 id="quiz-question" style="margin-bottom:5px; font-size:1.3rem">Текст питання</h3>
+        <div class="quiz-opts" id="quiz-opts"></div>
+        <div class="explanation" id="quiz-explain"></div>
+        <button class="btn" id="btn-quiz-next" style="display:none; margin-top:20px" onclick="Quiz.next()">Далі →</button>
+    </div>
+
+    <div id="quiz-result" style="display:none" class="quiz-container">
+        <h2 style="text-align:center; margin-bottom:10px">Результат</h2>
+        <div style="font-size:3.5rem; font-weight:bold; color:var(--blue); text-align:center" id="res-pct">0%</div>
+        <p id="res-desc" style="text-align:center; margin:10px 0 20px; font-size:1.1rem"></p>
+        <div class="stats-grid">
+            <div class="stat-card"><span class="stat-val" id="res-correct">0/0</span><span class="stat-lbl">Вірно</span></div>
+            <div class="stat-card"><span class="stat-val" id="res-time">0</span><span class="stat-lbl">Час</span></div>
+            <div class="stat-card"><span class="stat-val" id="res-medal">—</span><span class="stat-lbl">Медаль</span></div>
+        </div>
+        <button class="btn btn-gold" onclick="Quiz.start()" style="margin-top:20px">Ще раз</button>
+        <button class="btn btn-outline" onclick="Router.go('home')" style="margin-top:10px">На головну</button>
+    </div>
+</section>
+
+<!-- ===== GLOSSARY ===== -->
+<section id="page-glossary" class="page">
+    <h2>Словник термінів</h2>
+    <img class="gloss-header-img"
+         src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg/1200px-Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg"
+         alt="Запорожці пишуть листа турецькому султану — І. Рєпін"
+         onerror="this.style.display='none'">
+    <input type="text" id="gloss-search" placeholder="Пошук терміну або значення..." oninput="Gloss.search(this.value)">
+    <div class="glossary-grid" id="glossary-list"></div>
+</section>
+
+<!-- ===== PROFILE ===== -->
+<section id="page-profile" class="page">
+    <div style="text-align:center; margin-bottom:30px">
+        <div class="profile-avatar" id="prof-initials">?</div>
+        <h2 id="prof-name">Ім'я</h2>
+        <p id="prof-role" style="text-transform:uppercase; font-size:0.8rem; opacity:0.6; margin-top:4px"></p>
+    </div>
+
+    <h3>Редагувати профіль</h3>
+    <input type="text" id="edit-name" placeholder="Нове ім'я" style="margin-top:12px">
+    <button class="btn" onclick="Profile.save()" style="width:auto; padding:10px 25px">Зберегти зміни</button>
+
+    <h3 style="margin-top:40px">Останні результати</h3>
+    <div id="results-history" style="margin-top:12px"></div>
+</section>
+
+<!-- ===== ADMIN ===== -->
+<section id="page-admin" class="page">
+    <h2>Панель адміністратора</h2>
+    <div class="auth-tabs">
+        <div class="auth-tab active" onclick="Admin.tab('events', this)">Події</div>
+        <div class="auth-tab" onclick="Admin.tab('quiz', this)">Питання</div>
+        <div class="auth-tab" onclick="Admin.tab('users', this)">Користувачі</div>
+    </div>
+
+    <div id="admin-events">
+        <h4 style="margin-bottom:15px">Додати нову подію</h4>
+        <input type="text" id="adm-ev-year" placeholder="Рік (напр. 988)">
+        <input type="text" id="adm-ev-title" placeholder="Назва події">
+        <textarea id="adm-ev-desc" placeholder="Короткий опис (1–2 речення)"></textarea>
+        <textarea id="adm-ev-detail" placeholder="Детальний опис (відображається при розгортанні)"></textarea>
+        <select id="adm-ev-era">
+            <option value="ancient">Стародавній світ</option>
+            <option value="medieval">Середньовіччя</option>
+            <option value="cossack">Козацтво</option>
+            <option value="national">Відродження</option>
+            <option value="modern">Новітня</option>
+        </select>
+        <button class="btn btn-gold" onclick="Admin.addEvent()" style="width:auto; padding:10px 25px">Додати подію</button>
+        <hr style="margin:25px 0; border:none; border-top:1px solid var(--pgd)">
+        <h4 style="margin-bottom:10px">Наявні події</h4>
+        <ul class="admin-list" id="adm-list-events"></ul>
+    </div>
+
+    <div id="admin-quiz" style="display:none">
+        <h4 style="margin-bottom:15px">Додати питання</h4>
+        <input type="text" id="adm-q-text" placeholder="Текст питання">
+        <input type="text" id="adm-q-o0" placeholder="Варіант A">
+        <input type="text" id="adm-q-o1" placeholder="Варіант B">
+        <input type="text" id="adm-q-o2" placeholder="Варіант C">
+        <input type="text" id="adm-q-o3" placeholder="Варіант D">
+        <select id="adm-q-ans">
+            <option value="0">Правильний: A</option>
+            <option value="1">Правильний: B</option>
+            <option value="2">Правильний: C</option>
+            <option value="3">Правильний: D</option>
+        </select>
+        <textarea id="adm-q-exp" placeholder="Пояснення правильної відповіді"></textarea>
+        <button class="btn btn-gold" onclick="Admin.addQuestion()" style="width:auto; padding:10px 25px">Додати питання</button>
+        <hr style="margin:25px 0; border:none; border-top:1px solid var(--pgd)">
+        <h4 style="margin-bottom:10px">Наявні питання</h4>
+        <ul class="admin-list" id="adm-list-questions"></ul>
+    </div>
+
+    <div id="admin-users" style="display:none">
+        <div id="adm-list-users"></div>
+    </div>
+</section>
+
+<!-- Toast -->
+<div id="toast">Повідомлення</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal-overlay" onclick="Modal.close()">
+    <div class="modal" onclick="event.stopPropagation()">
+        <h3 id="modal-title">Підтвердження</h3>
+        <p id="modal-body" style="margin:15px 0; font-size:1rem"></p>
+        <div class="modal-btns">
+            <button class="btn btn-outline" onclick="Modal.close()">Скасувати</button>
+            <button class="btn btn-gold" id="modal-confirm-btn">Підтвердити</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===================== КОНСТРУКТОРИ =====================
+
+function User(data) {
+    this.id      = data.id;
+    this.name    = data.name;
+    this.email   = data.email   || '';
+    this.pass    = data.pass    || '';
+    this.role    = data.role    || 'user';
+    this.created = data.created || new Date().toISOString().slice(0,10);
+}
+User.prototype.isAdmin = function() { return this.role === 'admin'; };
+User.prototype.getInitials = function() {
+    return this.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+};
+
+function HistoryEvent(data) {
+    this.id     = data.id;
+    this.year   = data.year;
+    this.title  = data.title;
+    this.desc   = data.desc;
+    this.detail = data.detail;
+    this.era    = data.era;
+    this.img    = data.img || '';
+}
+
+function Question(data) {
+    this.id      = data.id;
+    this.q       = data.q;
+    this.opts    = data.opts;
+    this.ans     = parseInt(data.ans);
+    this.explain = data.explain;
+}
+Question.prototype.check = function(idx) { return idx === this.ans; };
+
+function QuizSession(questions) {
+    this.questions = Utils.shuffle([...questions]).slice(0, Math.min(10, questions.length));
+    this.idx       = 0;
+    this.score     = 0;
+    this.answered  = false;
+    this.startTime = Date.now();
+}
+QuizSession.prototype.current  = function() { return this.questions[this.idx]; };
+QuizSession.prototype.total    = function() { return this.questions.length; };
+QuizSession.prototype.answer   = function(i) {
+    var ok = this.current().check(i);
+    if (ok) this.score++;
+    this.answered = true;
+    return ok;
+};
+QuizSession.prototype.next    = function() { this.idx++; this.answered = false; };
+QuizSession.prototype.elapsed = function() {
+    var s = Math.round((Date.now() - this.startTime) / 1000);
+    return Math.floor(s / 60) + ' хв ' + (s % 60 < 10 ? '0' : '') + (s % 60) + ' с';
+};
+QuizSession.prototype.pct = function() {
+    return Math.round((this.score / this.total()) * 100);
+};
+
+// ===================== УТИЛІТИ =====================
+
+var Utils = {
+    shuffle: function(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+        }
+        return arr;
+    },
+    getEraName: function(e) {
+        var map = { ancient:'Стародавній', medieval:'Середньовіччя', cossack:'Козацтво', national:'Відродження', modern:'Новітня' };
+        return map[e] || e;
+    }
+};
+
+// ===================== БАЗА ДАНИХ =====================
+
+var DB = {
+    get: function(k) {
+        try { return JSON.parse(localStorage.getItem('nh_' + k)) || []; }
+        catch(e) { return []; }
+    },
+    set: function(k, v) { localStorage.setItem('nh_' + k, JSON.stringify(v)); },
+    nextId: function(t) {
+        var r = this.get(t);
+        return r.length ? Math.max.apply(null, r.map(function(x){ return x.id || 0; })) + 1 : 1;
+    },
+    init: function() {
+        if (!localStorage.getItem('nh_users')) {
+            this.set('users', [
+                {id:1, name:'Адміністратор', email:'admin@ua', pass:'admin', role:'admin'},
+                {id:2, name:'Максим Сябер',  email:'user@ua',  pass:'user',  role:'user'}
+            ]);
+        }
+        if (!localStorage.getItem('nh_events')) {
+            this.set('events', [
+                {id:1,  year:'VII ст. до н.е.', title:'Скіфське царство',          desc:'Час розквіту кочової цивілізації скіфів у степах Причорномор\'я.',                         detail:'Скіфи панували у степах Північного Причорномор\'я і залишили по собі величні кургани. Найвідоміша знахідка — золота Пектораль з кургану Товста Могила.',       era:'ancient'},
+                {id:2,  year:'882',             title:'Утворення Київської Русі',   desc:'Об\'єднання північних та південних руських земель князем Олегом.',                         detail:'Варязький князь Олег захопив Київ, проголосивши його «матір\'ю міст руських». Саме це вважається датою заснування Давньоруської держави.',              era:'medieval'},
+                {id:3,  year:'988',             title:'Хрещення Русі',              desc:'Прийняття християнства як державної релігії князем Володимиром Великим.',                   detail:'Хрещення визначило цивілізаційний вектор розвитку України як частини європейської культури. Кияни були охрещені у річці Почайна.',                       era:'medieval'},
+                {id:4,  year:'1556',            title:'Заснування Запорозької Січі',desc:'Створення першої козацької фортеці на острові Мала Хортиця Дмитром Вишневецьким.',          detail:'Байда Вишневецький згуртував козаків для захисту південних кордонів від татарських набігів. Січ стала осередком козацької вольності.',                  era:'cossack'},
+                {id:5,  year:'1648',            title:'Повстання Хмельницького',    desc:'Початок Національно-визвольної війни проти Речі Посполитої.',                               detail:'Перемоги під Жовтими Водами, Корсунем та Батогом дозволили утворити Козацьку гетьманську державу — Гетьманщину.',                                      era:'cossack'},
+                {id:6,  year:'1775',            title:'Знищення Запорозької Січі',  desc:'Ліквідація Катериною II останнього осередку козацької вольності.',                           detail:'Після придушення Пугачовщини Катерина II відправила війська генерала Текелія, які оточили й зруйнували Січ. Останній кошовий Петро Калнишевський загинув у засланні.',  era:'cossack'},
+                {id:7,  year:'1814',            title:'Народження Тараса Шевченка', desc:'Поява на світ майбутнього пророка та символу української нації.',                            detail:'Шевченко народився у селі Моринці в родині кріпаків. У 1838 році його викупили з кріпацтва. Його «Кобзар» став духовним заповітом народу.',            era:'national'},
+                {id:8,  year:'1932–33',         title:'Голодомор',                  desc:'Геноцид українського народу — штучний голод, організований сталінським режимом.',            detail:'Внаслідок примусової колективізації та вилучення зерна мільйони українців загинули від голоду. У 2006 році Голодомор визнано геноцидом.',              era:'national'},
+                {id:9,  year:'1991',            title:'Незалежність України',       desc:'Прийняття Акту проголошення незалежності України 24 серпня 1991 року.',                     detail:'На всеукраїнському референдумі 1 грудня 1991 року 92,3% громадян підтримали незалежність. Того ж дня Кравчук став першим Президентом.',                 era:'modern'},
+                {id:10, year:'2004',            title:'Помаранчева революція',      desc:'Масові протести проти фальсифікації президентських виборів.',                                detail:'Після оголошення перемоги Януковича сотні тисяч людей вийшли на Майдан. Результатом стало переголосування та перемога Ющенка.',                        era:'modern'},
+                {id:11, year:'2013–14',         title:'Революція Гідності',         desc:'Повалення проросійського режиму Януковича та вибір євроінтеграції.',                         detail:'Після відмови підписати угоду про асоціацію з ЄС розпочалися протести. У лютому 2014 року Небесна Сотня загинула від рук снайперів. Янукович втік.',  era:'modern'}
+            ]);
+        }
+        if (!localStorage.getItem('nh_questions')) {
+            this.set('questions', [
+                {id:1, q:'Хто охрестив Київську Русь у 988 році?',               opts:['Святослав Хоробрий','Володимир Великий','Ярослав Мудрий','Княгиня Ольга'],                  ans:1, explain:'Князь Володимир прийняв хрещення у Херсонесі та охрестив киян у Почайні у 988 році.'},
+                {id:2, q:'Який гетьман очолив повстання 1648 року?',              opts:['Іван Мазепа','Петро Сагайдачний','Богдан Хмельницький','Пилип Орлик'],                     ans:2, explain:'Богдан Хмельницький очолив визвольну війну, яка призвела до утворення Козацької держави.'},
+                {id:3, q:'Коли була остаточно знищена Запорозька Січ?',           opts:['1648','1709','1775','1791'],                                                                 ans:2, explain:'За наказом Катерини II генерал Текелій оточив і зруйнував Запорозьку Січ у 1775 році.'},
+                {id:4, q:'Ким за соціальним походженням був Тарас Шевченко?',     opts:['Міщанином','Дворянином','Кріпаком','Духовного сану'],                                       ans:2, explain:'Шевченко народився кріпаком і був викуплений з неволі у 1838 р. Карлом Брюлловим та Василем Жуковським.'},
+                {id:5, q:'Скільки % українців проголосували за незалежність у 1991 р.?', opts:['75,2%','84,1%','90,3%','92,3%'],                                                    ans:3, explain:'Понад 92% громадян у всіх областях України підтримали незалежність на референдумі 1 грудня 1991 року.'},
+                {id:6, q:'Яку назву мала перша українська конституція 1710 р.?',  opts:['Руська Правда','Березневі статті','Конституція Пилипа Орлика','Гадяцький договір'],        ans:2, explain:'Конституція Пилипа Орлика 1710 р. — одна з перших демократичних конституцій світу.'},
+                {id:7, q:'Де народився Тарас Шевченко?',                          opts:['Переяслав','Канів','Моринці','Кирилівка'],                                                   ans:2, explain:'Шевченко народився у с. Моринці на Звенигородщині (сучасна Черкаська область) у 1814 році.'},
+                {id:8, q:'Яка подія поклала початок Революції Гідності?',         opts:['Відмова від угоди з ЄС','Вбивство журналіста Гонгадзе','Газова криза з Росією','Вибори 2010 р.'], ans:0, explain:'У листопаді 2013 р. уряд Азарова призупинив переговори щодо Угоди про асоціацію з ЄС — це і стало поштовхом до протестів.'}
+            ]);
+        }
+        if (!localStorage.getItem('nh_glossary')) {
+            this.set('glossary', [
+                {term:'Козак',        def:'Вільна озброєна людина, представник військового стану на українських землях.'},
+                {term:'Гетьман',      def:'Титул голови козацької держави або війська в Україні XVI–XVIII ст.'},
+                {term:'Голодомор',    def:'Штучно організований голод 1932–33 рр., внаслідок якого загинули мільйони українців.'},
+                {term:'Небесна Сотня',def:'Герої Революції Гідності, які загинули у Києві у лютому 2014 року.'},
+                {term:'Кобзар',       def:'Мандрівний співець-музикант; також назва збірки поезій Тараса Шевченка (1840).'},
+                {term:'Майдан',       def:'Центральна площа міста; символ народного спротиву та волевиявлення в Україні.'},
+                {term:'УНР',          def:'Українська Народна Республіка — держава, проголошена у 1917–1918 роках.'},
+                {term:'Київська Русь',def:'Могутня середньовічна держава зі столицею у Києві (IX–XIII ст.).'},
+                {term:'Гетьманщина', def:'Козацька держава середини XVII — кінця XVIII ст. з Гетьманом на чолі.'},
+                {term:'Пектораль',    def:'Золота нагрудна прикраса скіфського царя IV ст. до н.е., знайдена у кургані Товста Могила.'},
+                {term:'Конституція',  def:'Основний закон держави, що визначає її устрій і права громадян.'},
+                {term:'Євромайдан',   def:'Назва протестного руху 2013–2014 рр., що переріс у Революцію Гідності.'}
+            ]);
+        }
+    }
+};
+
+// ===================== АВТОРИЗАЦІЯ =====================
+
+var Auth = {
+    currentUser: null,
+    currentTab: 'login',
+
+    toggleTab: function(tab, el) {
+        this.currentTab = tab;
+        document.querySelectorAll('.auth-tab').forEach(function(t){ t.classList.remove('active'); });
+        el.classList.add('active');
+        document.getElementById('reg-fields').style.display = tab === 'reg' ? 'block' : 'none';
+        document.getElementById('btn-auth-submit').innerText = tab === 'reg' ? 'Створити акаунт' : 'Увійти';
+    },
+
+    submit: function() {
+        var email = document.getElementById('auth-email').value.trim();
+        var pass  = document.getElementById('auth-pass').value;
+        var users = DB.get('users');
+
+        if (this.currentTab === 'login') {
+            var found = null;
+            for (var i = 0; i < users.length; i++) {
+                if (users[i].email === email && users[i].pass === pass) { found = users[i]; break; }
+            }
+            if (found) this._startSession(new User(found));
+            else Toast.show('Невірний email або пароль', 'red');
+        } else {
+            var name = document.getElementById('auth-name').value.trim();
+            if (!name || !email || !pass) return Toast.show('Заповніть усі поля');
+            if (users.some(function(u){ return u.email === email; })) return Toast.show('Такий email вже існує');
+            var nu = { id: DB.nextId('users'), name: name, email: email, pass: pass, role: 'user' };
+            users.push(nu);
+            DB.set('users', users);
+            Toast.show('Реєстрація успішна!');
+            this._startSession(new User(nu));
+        }
+    },
+
+    guest: function() {
+        this._startSession(new User({id:0, name:'Гість', email:'', role:'guest'}));
+    },
+
+    _startSession: function(user) {
+        this.currentUser = user;
+        document.getElementById('page-login').classList.remove('active');
+        document.getElementById('main-header').style.display = 'block';
+        document.getElementById('user-initials').innerText = user.getInitials();
+        document.getElementById('link-admin').style.display = user.isAdmin() ? 'block' : 'none';
+        Router.go('home');
+    },
+
+    logout: function() {
+        this.currentUser = null;
+        document.getElementById('main-header').style.display = 'none';
+        document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+        document.getElementById('page-login').classList.add('active');
+    }
+};
+
+// ===================== РОУТЕР =====================
+
+var Router = {
+    go: function(page) {
+        document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+        document.querySelectorAll('.nav-links a').forEach(function(a){ a.classList.remove('active'); });
+
+        var target = document.getElementById('page-' + page);
+        if (target) target.classList.add('active');
+
+        var link = document.getElementById('link-' + page);
+        if (link) link.classList.add('active');
+
+        window.scrollTo(0, 0);
+
+        if (page === 'home')     Home.render();
+        if (page === 'timeline') TL.render('all');
+        if (page === 'glossary') Gloss.render();
+        if (page === 'profile')  Profile.render();
+        if (page === 'admin')    Admin.render();
+    }
+};
+
+// ===================== КАРТА ЗОБРАЖЕНЬ ПОДІЙ =====================
+// thumb — мініатюра на картці (≈330px), full — для розгорнутого перегляду (оригінал)
+
+var EVENT_IMAGES = {
+    1:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Pectoral_from_the_Tolstaya_Mogila_Kurgan.jpg/330px-Pectoral_from_the_Tolstaya_Mogila_Kurgan.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/8/87/Pectoral_from_the_Tolstaya_Mogila_Kurgan.jpg',
+        caption: 'Золота пектораль із кургану Товста Могила (IV ст. до н.е.)'
+    },
+    2:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg/330px-80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg',
+        caption: 'Собор Святої Софії у Києві, збудований за часів Ярослава Мудрого'
+    },
+    3:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Lebedev_baptism.jpg/330px-Lebedev_baptism.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/9/9f/Lebedev_baptism.jpg',
+        caption: 'Хрещення киян — картина К. В. Лебедєва'
+    },
+    4:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg/330px-Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/7/79/Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg',
+        caption: 'Запорожці пишуть листа турецькому султану — І. Ю. Рєпін (1891)'
+    },
+    5:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Bohdan_Khmelnytsky_%28Portrait%2C_sec._half_17th_century%2C_Chernihiv_Historical_Museum%29_%28cropped%29.jpg/330px-Bohdan_Khmelnytsky_%28Portrait%2C_sec._half_17th_century%2C_Chernihiv_Historical_Museum%29_%28cropped%29.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/3/3f/Bohdan_Khmelnytsky_%28Portrait%2C_sec._half_17th_century%2C_Chernihiv_Historical_Museum%29_%28cropped%29.jpg',
+        caption: 'Портрет Богдана Хмельницького (друга пол. XVII ст., Чернігівський музей)'
+    },
+    6:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Viktor_Kovalyov_%28mid-19th_century%29_Last_Rada_on_Sich.jpg/330px-Viktor_Kovalyov_%28mid-19th_century%29_Last_Rada_on_Sich.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/0/06/Viktor_Kovalyov_%28mid-19th_century%29_Last_Rada_on_Sich.jpg',
+        caption: 'Остання рада на Запорозькій Січі — В. Ковальов (сер. XIX ст.)'
+    },
+    7:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg/330px-%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/b/b2/%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg',
+        caption: 'Тарас Шевченко. Фото К. Козловського, Петербург, травень 1859 р.'
+    },
+    8:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/HolodomorKharkiv_1933_Wienerberger.jpg/330px-HolodomorKharkiv_1933_Wienerberger.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/2/27/HolodomorKharkiv_1933_Wienerberger.jpg',
+        caption: 'Харків, 1933 рік. Фото А. Вінербергера — одне з небагатьох свідчень Голодомору'
+    },
+    9:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Declaration_of_Independence_of_Ukraine%2C_1991.jpg/330px-Declaration_of_Independence_of_Ukraine%2C_1991.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/1/18/Declaration_of_Independence_of_Ukraine%2C_1991.jpg',
+        caption: 'Акт проголошення незалежності України, підписаний 24 серпня 1991 року'
+    },
+    10: {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Morning_first_day_of_Orange_Revolution.jpg/330px-Morning_first_day_of_Orange_Revolution.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/f/f8/Morning_first_day_of_Orange_Revolution.jpg',
+        caption: 'Ранок першого дня Помаранчевої революції на Майдані Незалежності, 2004'
+    },
+    11: {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/330px-Euromaidan_collage.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/5/53/Euromaidan_collage.jpg',
+        caption: 'Євромайдан — колаж подій Революції Гідності 2013–2014 рр.'
+    }
+};
+
+function getEvThumb(ev) {
+    var d = EVENT_IMAGES[ev.id];
+    return (d && d.thumb) || ev.img || '';
+}
+function getEvFull(ev) {
+    var d = EVENT_IMAGES[ev.id];
+    return (d && d.full) || ev.img || '';
+}
+function getEvCaption(ev) {
+    var d = EVENT_IMAGES[ev.id];
+    return (d && d.caption) || '';
+}
+
+// ===================== ГОЛОВНА =====================
+
+var Home = {
+    render: function() {
+        var user    = Auth.currentUser;
+        var results = DB.get('quiz_results').filter(function(r){ return r.userId === user.id; });
+        var record  = results.length ? Math.max.apply(null, results.map(function(r){ return r.pct; })) : 0;
+
+        document.getElementById('welcome-msg').innerText = 'Вітаємо, ' + user.name.split(' ')[0] + '!';
+        document.getElementById('stat-events').innerText = DB.get('events').length;
+        document.getElementById('stat-record').innerText = record + '%';
+        document.getElementById('stat-tries').innerText  = results.length;
+
+        var events = DB.get('events').slice(-3).reverse();
+        var html = '';
+        events.forEach(function(ev) {
+            var thumb = getEvThumb(ev);
+            var imgTag = thumb
+                ? '<img src="' + thumb + '" class="ev-thumb" onerror="this.style.display=\'none\'" alt="">'
+                : '';
+            html += '<div class="event-card" onclick="Router.go(\'timeline\')">' +
+                '<div class="ev-card-inner">' +
+                '<div class="ev-card-text">' +
+                '<div class="event-year">' + ev.year + '</div>' +
+                '<div class="brand" style="font-size:1.2rem; margin:5px 0">' + ev.title + '</div>' +
+                '<p>' + ev.desc + '</p>' +
+                '</div>' +
+                imgTag +
+                '</div></div>';
+        });
+        document.getElementById('home-recent-events').innerHTML = html;
+    }
+};
+
+// ===================== ХРОНОЛОГІЯ =====================
+
+var TL = {
+    currentFilter: 'all',
+    render: function(filter) {
+        this.currentFilter = filter;
+        var events = DB.get('events');
+        if (filter !== 'all') events = events.filter(function(e){ return e.era === filter; });
+
+        var html = '';
+        events.forEach(function(ev) {
+            var thumb   = getEvThumb(ev);
+            var full    = getEvFull(ev);
+            var caption = getEvCaption(ev);
+
+            var thumbTag = thumb
+                ? '<img src="' + thumb + '" class="ev-thumb" onerror="this.style.display=\'none\'" alt="">'
+                : '';
+
+            var detailImgBlock = full
+                ? '<div class="ev-detail-img-wrap">' +
+                    '<img src="' + full + '" class="ev-detail-img" onerror="this.parentNode.style.display=\'none\'" alt="' + ev.title + '">' +
+                  '</div>' +
+                  (caption ? '<p style="font-size:0.78rem; opacity:0.55; margin-bottom:12px; font-style:italic; text-align:center">' + caption + '</p>' : '')
+                : '';
+
+            html += '<div class="event-card" onclick="TL.toggleDetail(this)">' +
+                '<div class="ev-card-inner">' +
+                '<div class="ev-card-text">' +
+                '<span class="event-year">' + ev.year + '</span>' +
+                '<span class="event-era" style="background:var(--era-' + ev.era + ')">' + Utils.getEraName(ev.era) + '</span>' +
+                '<div class="brand" style="font-size:1.3rem; margin:6px 0">' + ev.title + '</div>' +
+                '<p>' + ev.desc + '</p>' +
+                '</div>' +
+                thumbTag +
+                '</div>' +
+                '<div class="event-detail">' + detailImgBlock + (ev.detail || '') + '</div>' +
+                '</div>';
+        });
+        document.getElementById('timeline-list').innerHTML = html || '<p style="opacity:0.6; padding:20px 0">Записів не знайдено</p>';
+    },
+    toggleDetail: function(card) {
+        var d = card.querySelector('.event-detail');
+        if (d) d.classList.toggle('active');
+    },
+    filter: function(era, btn) {
+        document.querySelectorAll('#tl-filters .filter-btn').forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        this.render(era);
+    }
+};
+
+// ===================== ТЕСТИ =====================
+
+var Quiz = {
+    session: null,
+
+    start: function() {
+        var qs = DB.get('questions').map(function(q){ return new Question(q); });
+        if (!qs.length) return Toast.show('Питань не знайдено. Адміністратор має їх додати.');
+        this.session = new QuizSession(qs);
+        document.getElementById('quiz-intro').style.display  = 'none';
+        document.getElementById('quiz-result').style.display = 'none';
+        document.getElementById('quiz-game').style.display   = 'block';
+        this.renderQ();
+    },
+
+    renderQ: function() {
+        var s = this.session;
+        var q = s.current();
+        document.getElementById('quiz-counter').innerText = 'Питання ' + (s.idx + 1) + ' з ' + s.total();
+        document.getElementById('quiz-score').innerText   = 'Вірно: ' + s.score;
+        document.getElementById('quiz-progress').style.width = (s.idx / s.total() * 100) + '%';
+        document.getElementById('quiz-question').innerText   = q.q;
+        document.getElementById('quiz-explain').style.display    = 'none';
+        document.getElementById('btn-quiz-next').style.display   = 'none';
+
+        var html = '';
+        q.opts.forEach(function(opt, i) {
+            html += '<button class="opt-btn" onclick="Quiz.answer(' + i + ', this)">' +
+                '<b>' + String.fromCharCode(65 + i) + ':</b> ' + opt + '</button>';
+        });
+        document.getElementById('quiz-opts').innerHTML = html;
+    },
+
+    answer: function(idx, el) {
+        if (this.session.answered) return;
+        var correct = this.session.answer(idx);
+        var btns = document.querySelectorAll('.opt-btn');
+        btns.forEach(function(b){ b.disabled = true; });
+        btns[this.session.current().ans].classList.add('correct');
+        if (!correct) el.classList.add('wrong');
+
+        var exp = document.getElementById('quiz-explain');
+        exp.innerHTML = '<b>' + (correct ? '✓ Правильно!' : '✗ Невірно.') + '</b> ' + this.session.current().explain;
+        exp.style.display = 'block';
+        document.getElementById('btn-quiz-next').style.display = 'block';
+        document.getElementById('quiz-score').innerText = 'Вірно: ' + this.session.score;
+    },
+
+    next: function() {
+        this.session.next();
+        if (this.session.idx < this.session.total()) {
+            this.renderQ();
+        } else {
+            this.finish();
+        }
+    },
+
+    finish: function() {
+        var s    = this.session;
+        var user = Auth.currentUser;
+        var pct  = s.pct();
+        var result = {
+            id:     DB.nextId('quiz_results'),
+            userId: user.id,
+            score:  s.score,
+            total:  s.total(),
+            pct:    pct,
+            time:   s.elapsed(),
+            date:   new Date().toLocaleDateString('uk-UA')
+        };
+        var all = DB.get('quiz_results');
+        all.push(result);
+        DB.set('quiz_results', all);
+
+        document.getElementById('quiz-game').style.display   = 'none';
+        document.getElementById('quiz-result').style.display = 'block';
+        document.getElementById('res-pct').innerText     = pct + '%';
+        document.getElementById('res-correct').innerText = s.score + '/' + s.total();
+        document.getElementById('res-time').innerText    = s.elapsed();
+
+        var medal = pct >= 90 ? '🏆' : pct >= 70 ? '🥈' : pct >= 50 ? '🥉' : '📖';
+        document.getElementById('res-medal').innerText = medal;
+
+        var desc = pct >= 80 ? 'Чудово! Ви справжній знавець.' : pct >= 50 ? 'Непогано, є над чим попрацювати.' : 'Варто ще повчити матеріал.';
+        document.getElementById('res-desc').innerText = desc;
+    }
+};
+
+// ===================== СЛОВНИК =====================
+
+var Gloss = {
+    render: function(items) {
+        var list = items || DB.get('glossary');
+        list = list.slice().sort(function(a,b){ return a.term.localeCompare(b.term, 'uk'); });
+        var html = '';
+        list.forEach(function(g) {
+            html += '<div class="gloss-card"><div class="gloss-term">' + g.term + '</div><div>' + g.def + '</div></div>';
+        });
+        document.getElementById('glossary-list').innerHTML = html || '<p style="opacity:0.6; padding:15px 0">Нічого не знайдено</p>';
+    },
+    search: function(q) {
+        var ql = q.toLowerCase();
+        var filtered = DB.get('glossary').filter(function(g){
+            return g.term.toLowerCase().includes(ql) || g.def.toLowerCase().includes(ql);
+        });
+        this.render(filtered);
+    }
+};
+
+// ===================== ПРОФІЛЬ =====================
+
+var Profile = {
+    render: function() {
+        var u = Auth.currentUser;
+        document.getElementById('prof-initials').innerText = u.getInitials();
+        document.getElementById('prof-name').innerText     = u.name;
+        document.getElementById('prof-role').innerText     = u.role === 'admin' ? 'Адміністратор' : u.role === 'guest' ? 'Гість' : 'Дослідник';
+        document.getElementById('edit-name').value         = u.name;
+
+        var hist = DB.get('quiz_results').filter(function(r){ return r.userId === u.id; }).reverse().slice(0, 7);
+        var html = '';
+        if (hist.length) {
+            html = '<table style="width:100%; border-collapse:collapse; font-size:0.95rem">' +
+                '<tr style="border-bottom:2px solid var(--pgd); opacity:0.7"><th style="text-align:left; padding:8px 4px">Дата</th><th style="padding:8px 4px">Результат</th><th style="padding:8px 4px">Час</th></tr>';
+            hist.forEach(function(r){
+                html += '<tr style="border-bottom:1px solid #eee">' +
+                    '<td style="padding:10px 4px">' + r.date + '</td>' +
+                    '<td style="text-align:center; font-weight:bold; color:var(--blue)">' + r.pct + '% (' + r.score + '/' + r.total + ')</td>' +
+                    '<td style="text-align:center">' + r.time + '</td></tr>';
+            });
+            html += '</table>';
+        } else {
+            html = '<p style="opacity:0.6">Результатів поки немає. Спробуйте пройти тест!</p>';
+        }
+        document.getElementById('results-history').innerHTML = html;
+    },
+    save: function() {
+        var newName = document.getElementById('edit-name').value.trim();
+        if (!newName) return Toast.show('Введіть ім\'я');
+        var users = DB.get('users');
+        var idx   = users.findIndex(function(u){ return u.id === Auth.currentUser.id; });
+        if (idx !== -1) {
+            users[idx].name = newName;
+            DB.set('users', users);
+        }
+        Auth.currentUser.name = newName;
+        document.getElementById('user-initials').innerText = Auth.currentUser.getInitials();
+        this.render();
+        Toast.show('Профіль оновлено');
+    }
+};
+
+// ===================== АДМІНКА =====================
+
+var Admin = {
+    currentTab: 'events',
+    render: function() { this.refreshLists(); },
+
+    tab: function(t, el) {
+        this.currentTab = t;
+        document.querySelectorAll('#page-admin .auth-tab').forEach(function(b){ b.classList.remove('active'); });
+        el.classList.add('active');
+        ['events','quiz','users'].forEach(function(tab){
+            document.getElementById('admin-' + tab).style.display = tab === t ? 'block' : 'none';
+        });
+        this.refreshLists();
+    },
+
+    refreshLists: function() {
+        var evs = DB.get('events').slice().reverse();
+        var evHtml = '';
+        evs.forEach(function(e){
+            evHtml += '<li><span>' + e.year + ' — ' + e.title + '</span>' +
+                '<button class="btn btn-sm" style="background:var(--red); color:white; border:none" onclick="Admin.deleteEvent(' + e.id + ')">Видалити</button></li>';
+        });
+        document.getElementById('adm-list-events').innerHTML = evHtml || '<li style="opacity:0.5">Список порожній</li>';
+
+        var qs = DB.get('questions').slice().reverse();
+        var qHtml = '';
+        qs.forEach(function(q){
+            qHtml += '<li><span>' + q.q.slice(0, 55) + (q.q.length > 55 ? '…' : '') + '</span>' +
+                '<button class="btn btn-sm" style="background:var(--red); color:white; border:none" onclick="Admin.deleteQuestion(' + q.id + ')">Видалити</button></li>';
+        });
+        document.getElementById('adm-list-questions').innerHTML = qHtml || '<li style="opacity:0.5">Список порожній</li>';
+
+        var us = DB.get('users');
+        var uHtml = '<table style="width:100%; border-collapse:collapse; font-size:0.9rem">' +
+            '<tr style="border-bottom:2px solid var(--pgd); opacity:0.6"><th style="text-align:left; padding:8px 4px">ID</th><th style="padding:8px 4px">Ім\'я</th><th style="padding:8px 4px">Email</th><th style="padding:8px 4px">Роль</th></tr>';
+        us.forEach(function(u){
+            uHtml += '<tr style="border-bottom:1px solid #eee">' +
+                '<td style="padding:10px 4px">' + u.id + '</td>' +
+                '<td style="padding:10px 4px">' + u.name + '</td>' +
+                '<td style="padding:10px 4px">' + u.email + '</td>' +
+                '<td style="text-align:center; font-weight:bold">' + u.role + '</td></tr>';
+        });
+        document.getElementById('adm-list-users').innerHTML = uHtml + '</table>';
+    },
+
+    addEvent: function() {
+        var year   = document.getElementById('adm-ev-year').value.trim();
+        var title  = document.getElementById('adm-ev-title').value.trim();
+        var desc   = document.getElementById('adm-ev-desc').value.trim();
+        var detail = document.getElementById('adm-ev-detail').value.trim();
+        var era    = document.getElementById('adm-ev-era').value;
+        if (!year || !title) return Toast.show('Заповніть рік та назву');
+        var evs = DB.get('events');
+        evs.push({ id: DB.nextId('events'), year: year, title: title, desc: desc, detail: detail, era: era });
+        DB.set('events', evs);
+        ['adm-ev-year','adm-ev-title','adm-ev-desc','adm-ev-detail'].forEach(function(id){ document.getElementById(id).value = ''; });
+        Toast.show('Подію додано');
+        this.refreshLists();
+    },
+
+    deleteEvent: function(id) {
+        Modal.confirm('Видалення події', 'Ви впевнені, що хочете видалити цю подію?', function() {
+            DB.set('events', DB.get('events').filter(function(e){ return e.id !== id; }));
+            Admin.refreshLists();
+            Toast.show('Подію видалено');
+        });
+    },
+
+    addQuestion: function() {
+        var q = {
+            id:      DB.nextId('questions'),
+            q:       document.getElementById('adm-q-text').value.trim(),
+            opts:    [0,1,2,3].map(function(i){ return document.getElementById('adm-q-o' + i).value.trim(); }),
+            ans:     parseInt(document.getElementById('adm-q-ans').value),
+            explain: document.getElementById('adm-q-exp').value.trim()
+        };
+        if (!q.q || !q.opts[0]) return Toast.show('Заповніть текст питання і варіанти');
+        var qs = DB.get('questions');
+        qs.push(q);
+        DB.set('questions', qs);
+        ['adm-q-text','adm-q-o0','adm-q-o1','adm-q-o2','adm-q-o3','adm-q-exp'].forEach(function(id){ document.getElementById(id).value = ''; });
+        Toast.show('Питання додано');
+        this.refreshLists();
+    },
+
+    deleteQuestion: function(id) {
+        Modal.confirm('Видалення питання', 'Видалити це питання?', function() {
+            DB.set('questions', DB.get('questions').filter(function(q){ return q.id !== id; }));
+            Admin.refreshLists();
+            Toast.show('Питання видалено');
+        });
+    }
+};
+
+// ===================== СПОВІЩЕННЯ & МОДАЛКА =====================
+
+var Toast = {
+    show: function(msg, type) {
+        var t = document.getElementById('toast');
+        t.innerText = msg;
+        t.style.background = type === 'red' ? 'var(--red)' : 'var(--ink)';
+        t.classList.add('show');
+        setTimeout(function(){ t.classList.remove('show'); }, 2800);
+    }
+};
+
+var Modal = {
+    callback: null,
+    confirm: function(title, body, cb) {
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-body').innerText  = body;
+        this.callback = cb;
+        document.getElementById('modal-overlay').classList.add('open');
+        document.getElementById('modal-confirm-btn').onclick = function() {
+            Modal.callback && Modal.callback();
+            Modal.close();
+        };
+    },
+    close: function() {
+        document.getElementById('modal-overlay').classList.remove('open');
+    }
+};
+
+// ===================== ЗАПУСК =====================
+
+window.onload = function() {
+    DB.init();
+};
+</script>
+</body>
+</html>
