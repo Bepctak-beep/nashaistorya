@@ -33,12 +33,36 @@
         body {
             font-family: 'Crimson Pro', serif;
             background-color: var(--pg);
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpolygon points='30,6 54,30 30,54 6,30' stroke='%23c8913a' stroke-width='0.7' opacity='0.18'/%3E%3Cpolygon points='30,16 44,30 30,44 16,30' fill='%23c8913a' opacity='0.05'/%3E%3Ccircle cx='30' cy='30' r='2' fill='%23c8913a' opacity='0.12'/%3E%3Ccircle cx='0' cy='0' r='2' fill='%23c8913a' opacity='0.12'/%3E%3Ccircle cx='60' cy='0' r='2' fill='%23c8913a' opacity='0.12'/%3E%3Ccircle cx='0' cy='60' r='2' fill='%23c8913a' opacity='0.12'/%3E%3Ccircle cx='60' cy='60' r='2' fill='%23c8913a' opacity='0.12'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 60px 60px;
             color: var(--ink);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
         h1, h2, h3, .brand { font-family: 'Playfair Display', serif; font-weight: 900; }
+
+        /* Decorative section heading */
+        .section-head {
+            display: flex; align-items: center; gap: 14px; margin-bottom: 24px;
+        }
+        .section-head h2, .section-head h3 { margin: 0; }
+        .ornament-line {
+            flex: 1; height: 1px;
+            background: linear-gradient(to right, var(--gold), transparent);
+        }
+        .ornament-line.rev { background: linear-gradient(to left, var(--gold), transparent); }
+        .ornament-diamond {
+            width: 10px; height: 10px; background: var(--gold);
+            transform: rotate(45deg); flex-shrink: 0;
+        }
+
+        /* Decorative divider */
+        .ornament-divider {
+            text-align: center; margin: 28px 0; color: var(--gold);
+            font-size: 1.2rem; letter-spacing: 0.5em; opacity: 0.6;
+            user-select: none;
+        }
 
         /* Header & Nav */
         header {
@@ -69,10 +93,13 @@
         .nav-links a:hover, .nav-links a.active { color: var(--yellow); }
         .user-badge {
             background: var(--gold); color: var(--ink);
-            width: 35px; height: 35px; border-radius: 50%;
+            width: 38px; height: 38px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
             font-weight: bold; font-size: 0.8rem;
+            overflow: hidden; border: 2px solid rgba(255,255,255,0.3);
+            flex-shrink: 0;
         }
+        .user-badge img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 
         /* Pages */
         .page { display: none; padding: 20px; max-width: 800px; margin: 0 auto; min-height: 80vh; }
@@ -184,12 +211,110 @@
         .gloss-term { font-weight: bold; color: var(--blue); margin-bottom: 5px; font-size: 1.1rem; }
 
         /* Profile */
+        .profile-hero {
+            background:
+                linear-gradient(rgba(0,60,130,0.88), rgba(0,60,130,0.88)),
+                url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg/1200px-80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg') center/cover;
+            border-radius: 14px; padding: 36px 20px 28px; text-align: center;
+            margin-bottom: 30px; position: relative; overflow: hidden;
+        }
+        .profile-hero::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='20,4 36,20 20,36 4,20' stroke='white' stroke-width='0.5' fill='none' opacity='0.08'/%3E%3C/svg%3E");
+            background-size: 40px 40px; pointer-events: none;
+        }
+        .profile-avatar-wrap {
+            position: relative; display: inline-block; margin-bottom: 14px;
+        }
         .profile-avatar {
             background: var(--gold); color: var(--ink);
-            width: 80px; height: 80px; border-radius: 50%;
+            width: 100px; height: 100px; border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 2rem; margin: 0 auto 15px;
+            font-weight: bold; font-size: 2.4rem; margin: 0 auto;
+            overflow: hidden;
+            border: 4px solid rgba(255,255,255,0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
+        .profile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .avatar-change-btn {
+            position: absolute; bottom: 0; right: 0;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: var(--gold); color: var(--ink);
+            border: 2px solid white; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+        .avatar-change-btn:hover { background: #b07e2f; transform: scale(1.1); }
+
+        /* Crop Modal */
+        .crop-modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+            z-index: 600; display: none; align-items: center; justify-content: center;
+            flex-direction: column; padding: 20px;
+        }
+        .crop-modal-overlay.open { display: flex; }
+        .crop-box {
+            background: #1a1206; border-radius: 14px; padding: 20px;
+            max-width: 400px; width: 100%;
+            border: 1px solid rgba(200,145,58,0.3);
+        }
+        .crop-box h3 { color: #f4ead5; margin-bottom: 12px; text-align: center; font-size: 1.1rem; }
+        .crop-canvas-wrap {
+            position: relative; width: 100%; padding-top: 100%;
+            background: #000; border-radius: 50%; overflow: hidden;
+            margin: 0 auto 14px;
+        }
+        #crop-canvas {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            cursor: grab;
+        }
+        #crop-canvas:active { cursor: grabbing; }
+        .crop-hint { color: rgba(255,255,255,0.45); font-size: 0.8rem; text-align: center; margin-bottom: 14px; }
+        .crop-zoom { width: 100%; margin-bottom: 14px; accent-color: var(--gold); }
+        .crop-btns { display: flex; gap: 10px; }
+        .crop-btns .btn { flex: 1; padding: 10px; }
+
+        /* Hero enhancements */
+        .hero-trident {
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            font-size: 5rem; opacity: 0.06; user-select: none; pointer-events: none;
+            font-family: serif; line-height: 1;
+        }
+
+        /* Stat card decoration */
+        .stat-card {
+            position: relative; overflow: hidden;
+        }
+        .stat-card::after {
+            content: ''; position: absolute; bottom: -8px; right: -8px;
+            width: 50px; height: 50px; background: var(--gold);
+            opacity: 0.06; border-radius: 50%;
+        }
+
+        /* Better event cards */
+        .event-card {
+            border-top: 3px solid var(--gold);
+        }
+
+        /* Quiz intro banner */
+        .quiz-banner {
+            background:
+                linear-gradient(rgba(0,40,100,0.9), rgba(0,40,100,0.9)),
+                url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/800px-Euromaidan_collage.jpg') center/cover;
+            border-radius: 14px; padding: 40px 30px; text-align: center; margin-bottom: 20px;
+            position: relative; overflow: hidden;
+        }
+        .quiz-banner::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='20,4 36,20 20,36 4,20' stroke='%23ffd700' stroke-width='0.4' fill='none' opacity='0.12'/%3E%3C/svg%3E");
+            background-size: 40px 40px; pointer-events: none;
+        }
+        .quiz-banner h2 { color: #fff; position: relative; }
+        .quiz-banner p { color: rgba(255,255,255,0.75); position: relative; margin-top: 10px; font-size: 1.1rem; }
+        .quiz-banner .btn-gold { position: relative; margin-top: 20px; width: auto; padding: 14px 36px; }
 
         /* Admin */
         #page-admin .auth-tabs { margin-bottom: 25px; }
@@ -447,10 +572,11 @@
 <!-- ===== QUIZ ===== -->
 <section id="page-quiz" class="page">
     <div id="quiz-intro">
-        <h2>Тестування</h2>
-        <p style="margin-top:10px">Перевір свої знання з історії України. Питання охоплюють епохи від Скіфії до сьогодення.</p>
-        <br>
-        <button class="btn btn-gold" onclick="Quiz.start()" style="width:auto; padding:14px 30px">Почати тест</button>
+        <div class="quiz-banner">
+            <h2>Тестування знань</h2>
+            <p>Перевір себе з питань від скіфів до Революції Гідності. Десять запитань — скільки правильних?</p>
+            <button class="btn btn-gold" onclick="Quiz.start()">Почати тест</button>
+        </div>
     </div>
 
     <div id="quiz-game" style="display:none" class="quiz-container">
@@ -509,19 +635,49 @@
 
 <!-- ===== PROFILE ===== -->
 <section id="page-profile" class="page">
-    <div style="text-align:center; margin-bottom:30px">
-        <div class="profile-avatar" id="prof-initials">?</div>
-        <h2 id="prof-name">Ім'я</h2>
-        <p id="prof-role" style="text-transform:uppercase; font-size:0.8rem; opacity:0.6; margin-top:4px"></p>
+    <div class="profile-hero">
+        <div class="profile-avatar-wrap">
+            <div class="profile-avatar" id="prof-initials">?</div>
+            <button class="avatar-change-btn" onclick="AvatarCrop.open()" title="Змінити фото">✎</button>
+        </div>
+        <h2 id="prof-name" style="color:#fff; margin-bottom:4px">Ім'я</h2>
+        <p id="prof-role" style="text-transform:uppercase; font-size:0.8rem; color:rgba(255,255,255,0.55); letter-spacing:0.1em"></p>
     </div>
 
-    <h3>Редагувати профіль</h3>
-    <input type="text" id="edit-name" placeholder="Нове ім'я" style="margin-top:12px">
+    <div class="section-head">
+        <div class="ornament-diamond"></div>
+        <h3>Редагувати профіль</h3>
+        <div class="ornament-line"></div>
+    </div>
+    <input type="text" id="edit-name" placeholder="Нове ім'я" style="margin-top:4px">
     <button class="btn" onclick="Profile.save()" style="width:auto; padding:10px 25px">Зберегти зміни</button>
 
-    <h3 style="margin-top:40px">Останні результати</h3>
+    <div class="ornament-divider">✦ ✦ ✦</div>
+
+    <div class="section-head">
+        <div class="ornament-diamond"></div>
+        <h3>Останні результати</h3>
+        <div class="ornament-line"></div>
+    </div>
     <div id="results-history" style="margin-top:12px"></div>
 </section>
+
+<!-- ===== CROP MODAL ===== -->
+<div class="crop-modal-overlay" id="crop-overlay">
+    <div class="crop-box">
+        <h3>Оберіть та обріжте фото</h3>
+        <div class="crop-canvas-wrap">
+            <canvas id="crop-canvas" width="300" height="300"></canvas>
+        </div>
+        <p class="crop-hint">Перетягуйте зображення та змінюйте масштаб повзунком</p>
+        <input type="range" class="crop-zoom" id="crop-zoom" min="0.5" max="3" step="0.01" value="1" oninput="AvatarCrop.setZoom(this.value)">
+        <input type="file" id="crop-file-input" accept="image/*" style="display:none" onchange="AvatarCrop.loadFile(this)">
+        <div class="crop-btns">
+            <button class="btn btn-outline" style="color:#f4ead5; border-color:rgba(255,255,255,0.3)" onclick="AvatarCrop.close()">Скасувати</button>
+            <button class="btn btn-gold" onclick="AvatarCrop.save()">Зберегти</button>
+        </div>
+    </div>
+</div>
 
 <!-- ===== ADMIN ===== -->
 <section id="page-admin" class="page">
@@ -792,9 +948,10 @@ var Auth = {
         this.currentUser = user;
         document.getElementById('page-login').classList.remove('active');
         document.getElementById('main-header').style.display = 'block';
-        document.getElementById('user-initials').innerText = user.getInitials();
         document.getElementById('link-admin').style.display     = user.isAdmin() ? 'block' : 'none';
         document.getElementById('mob-link-admin').style.display = user.isAdmin() ? 'block' : 'none';
+        var savedAvatar = localStorage.getItem('nh_avatar_' + user.id) || null;
+        AvatarBadge.apply(savedAvatar);
         Router.go('home');
     },
 
@@ -1187,12 +1344,146 @@ var Gloss = {
     }
 };
 
+// ===================== ОБРІЗКА АВАТАРА =====================
+
+var AvatarCrop = {
+    img: null, zoom: 1, dragX: 0, dragY: 0,
+    startX: 0, startY: 0, isDragging: false,
+    offX: 0, offY: 0,
+
+    open: function() {
+        document.getElementById('crop-overlay').classList.add('open');
+        document.getElementById('crop-file-input').value = '';
+        this.img = null;
+        var ctx = document.getElementById('crop-canvas').getContext('2d');
+        ctx.clearRect(0,0,300,300);
+        ctx.fillStyle = '#111';
+        ctx.fillRect(0,0,300,300);
+        ctx.fillStyle = 'rgba(255,255,255,0.25)';
+        ctx.font = '14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Натисніть щоб обрати фото', 150, 145);
+        document.getElementById('crop-file-input').click();
+        this._bindCanvas();
+    },
+
+    close: function() {
+        document.getElementById('crop-overlay').classList.remove('open');
+    },
+
+    loadFile: function(input) {
+        var self = this;
+        if (!input.files || !input.files[0]) return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var image = new Image();
+            image.onload = function() {
+                self.img  = image;
+                self.zoom = Math.max(300 / image.width, 300 / image.height);
+                self.offX = (300 - image.width  * self.zoom) / 2;
+                self.offY = (300 - image.height * self.zoom) / 2;
+                document.getElementById('crop-zoom').value = self.zoom;
+                document.getElementById('crop-zoom').min   = Math.max(0.1, Math.min(300/image.width, 300/image.height));
+                self.draw();
+            };
+            image.src = e.target.result;
+        };
+        reader.readAsDataURL(input.files[0]);
+    },
+
+    draw: function() {
+        if (!this.img) return;
+        var c = document.getElementById('crop-canvas');
+        var ctx = c.getContext('2d');
+        ctx.clearRect(0,0,300,300);
+        ctx.drawImage(this.img, this.offX, this.offY, this.img.width * this.zoom, this.img.height * this.zoom);
+    },
+
+    setZoom: function(val) {
+        var old = this.zoom;
+        this.zoom = parseFloat(val);
+        var ratio = this.zoom / old;
+        this.offX = 150 - (150 - this.offX) * ratio;
+        this.offY = 150 - (150 - this.offY) * ratio;
+        this.draw();
+    },
+
+    _bindCanvas: function() {
+        var self = this;
+        var c = document.getElementById('crop-canvas');
+        c.onmousedown = c.ontouchstart = function(e) {
+            self.isDragging = true;
+            var pt = e.touches ? e.touches[0] : e;
+            self.startX = pt.clientX - self.offX;
+            self.startY = pt.clientY - self.offY;
+            e.preventDefault();
+        };
+        window.onmousemove = window.ontouchmove = function(e) {
+            if (!self.isDragging || !self.img) return;
+            var pt = e.touches ? e.touches[0] : e;
+            self.offX = pt.clientX - self.startX;
+            self.offY = pt.clientY - self.startY;
+            self.draw();
+            e.preventDefault();
+        };
+        window.onmouseup = window.ontouchend = function() { self.isDragging = false; };
+        c.onwheel = function(e) {
+            var delta = e.deltaY > 0 ? -0.05 : 0.05;
+            var zEl   = document.getElementById('crop-zoom');
+            var nv    = Math.max(parseFloat(zEl.min)||0.1, Math.min(3, self.zoom + delta));
+            zEl.value = nv;
+            self.setZoom(nv);
+            e.preventDefault();
+        };
+    },
+
+    save: function() {
+        if (!this.img) return Toast.show('Спочатку оберіть фото');
+        var off = document.createElement('canvas');
+        off.width = off.height = 300;
+        var ctx = off.getContext('2d');
+        ctx.beginPath();
+        ctx.arc(150, 150, 150, 0, Math.PI * 2);
+        ctx.clip();
+        ctx.drawImage(this.img, this.offX, this.offY, this.img.width * this.zoom, this.img.height * this.zoom);
+        var dataUrl = off.toDataURL('image/jpeg', 0.85);
+        var u = Auth.currentUser;
+        var key = 'nh_avatar_' + u.id;
+        localStorage.setItem(key, dataUrl);
+        Profile._applyAvatar(dataUrl);
+        AvatarBadge.apply(dataUrl);
+        this.close();
+        Toast.show('Фото оновлено!');
+    }
+};
+
+var AvatarBadge = {
+    apply: function(dataUrl) {
+        var badge = document.getElementById('user-initials');
+        if (dataUrl) {
+            badge.innerHTML = '<img src="' + dataUrl + '" alt="avatar">';
+        } else {
+            badge.innerHTML = Auth.currentUser ? Auth.currentUser.getInitials() : '?';
+        }
+    }
+};
+
 // ===================== ПРОФІЛЬ =====================
 
 var Profile = {
+    _applyAvatar: function(dataUrl) {
+        var el = document.getElementById('prof-initials');
+        if (dataUrl) {
+            el.innerHTML = '<img src="' + dataUrl + '" alt="avatar">';
+        } else {
+            el.innerHTML = Auth.currentUser ? Auth.currentUser.getInitials() : '?';
+        }
+    },
+
     render: function() {
         var u = Auth.currentUser;
-        document.getElementById('prof-initials').innerText = u.getInitials();
+        var savedAvatar = localStorage.getItem('nh_avatar_' + u.id) || null;
+        this._applyAvatar(savedAvatar);
         document.getElementById('prof-name').innerText     = u.name;
         document.getElementById('prof-role').innerText     = u.role === 'admin' ? 'Адміністратор' : u.role === 'guest' ? 'Гість' : 'Дослідник';
         document.getElementById('edit-name').value         = u.name;
