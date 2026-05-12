@@ -81,15 +81,20 @@
 
         /* Login */
         #page-login {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.68)),
-                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/1200px-Euromaidan_collage.jpg') center/cover;
+            position: fixed !important;
+            top: 0 !important; left: 0 !important;
+            width: 100% !important; height: 100% !important;
+            max-width: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Saint_Sophia%27s_Cathedral_in_Kyiv.jpg/1200px-Saint_Sophia%27s_Cathedral_in_Kyiv.jpg') center/cover no-repeat !important;
             z-index: 200; display: none; align-items: center; justify-content: center;
         }
-        #page-login.active { display: flex; }
+        #page-login.active { display: flex !important; }
         .auth-card {
-            background: var(--cream); padding: 30px; border-radius: 8px; width: 90%; max-width: 400px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: var(--cream); padding: 35px; border-radius: 12px; width: 90%; max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         }
         .auth-tabs { display: flex; margin-bottom: 20px; border-bottom: 1px solid #ddd; }
         .auth-tab { flex: 1; text-align: center; padding: 10px; cursor: pointer; opacity: 0.5; }
@@ -244,14 +249,99 @@
             border-radius: 10px; margin: 15px 0 20px;
         }
 
+        /* Leaderboard */
+        .lb-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        .lb-table th {
+            text-align: left; padding: 10px 12px; font-size: 0.8rem;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            opacity: 0.6; border-bottom: 2px solid var(--pgd);
+        }
+        .lb-table th.center { text-align: center; }
+        .lb-table td { padding: 14px 12px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        .lb-table td.center { text-align: center; }
+        .lb-table tr:last-child td { border-bottom: none; }
+        .lb-table tr:hover td { background: #fdf5e4; }
+        .lb-rank {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 900;
+            width: 40px; text-align: center;
+        }
+        .lb-rank.gold   { color: #c8913a; }
+        .lb-rank.silver { color: #888; }
+        .lb-rank.bronze { color: #a0693a; }
+        .lb-rank.other  { color: var(--ink); opacity: 0.4; }
+        .lb-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: var(--gold); color: var(--ink);
+            display: inline-flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 0.85rem; margin-right: 10px;
+            vertical-align: middle; flex-shrink: 0;
+        }
+        .lb-name { font-weight: 600; font-size: 1.05rem; }
+        .lb-me .lb-name { color: var(--blue); }
+        .lb-me td { background: #eaf2ff !important; }
+        .lb-score-badge {
+            display: inline-block; padding: 4px 12px; border-radius: 20px;
+            font-weight: bold; font-size: 1rem;
+        }
+        .lb-score-high   { background: #d4edda; color: var(--green); }
+        .lb-score-mid    { background: #fff3cd; color: #856404; }
+        .lb-score-low    { background: #f8d7da; color: var(--red); }
+        .lb-medal        { font-size: 1.4rem; }
+        .lb-empty { text-align: center; padding: 40px; opacity: 0.5; font-size: 1.1rem; }
+        .lb-header-row {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 8px; flex-wrap: wrap; gap: 10px;
+        }
+        .lb-my-rank {
+            background: var(--blue); color: white; padding: 8px 16px;
+            border-radius: 20px; font-size: 0.9rem; font-weight: 600;
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none; flex-direction: column; gap: 5px;
+            cursor: pointer; padding: 4px; background: none; border: none;
+        }
+        .hamburger span {
+            display: block; width: 22px; height: 2px;
+            background: white; border-radius: 2px; transition: 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none; flex-direction: column;
+            background: #1a170f; border-top: 1px solid rgba(255,255,255,0.1);
+            padding: 10px 20px 16px;
+        }
+        .mobile-menu.open { display: flex; }
+        .mobile-menu a {
+            color: #ccc; text-decoration: none; padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+            font-size: 1rem; cursor: pointer;
+        }
+        .mobile-menu a:last-child { border-bottom: none; }
+        .mobile-menu a.active, .mobile-menu a:hover { color: var(--yellow); }
+        .mobile-menu .mob-logout {
+            color: #f8d7da; font-size: 0.9rem; cursor: pointer;
+            padding: 12px 0; border-bottom: none;
+        }
+
         /* Responsive */
-        @media (max-width: 600px) {
-            .nav-links { gap: 8px; }
-            .nav-links a { font-size: 0.8rem; }
+        @media (max-width: 680px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
             .stats-grid { grid-template-columns: 1fr; }
             .hero h2 { font-size: 1.7rem; }
             .glossary-grid { grid-template-columns: 1fr; }
             .ev-thumb { width: 75px; height: 60px; }
+            .lb-table th.hide-mob, .lb-table td.hide-mob { display: none; }
+            nav .desktop-logout { display: none; }
+        }
+        @media (min-width: 681px) {
+            .mobile-menu { display: none !important; }
         }
     </style>
 </head>
@@ -261,23 +351,37 @@
 
 <header id="main-header" style="display:none">
     <nav>
-        <div class="brand" onclick="Router.go('home')" style="cursor:pointer; font-size:1.4rem;">Наша Історія</div>
+        <div class="brand" onclick="Router.go('home'); MobileMenu.close();" style="cursor:pointer; font-size:1.4rem;">Наша Історія</div>
         <div class="nav-links">
             <a onclick="Router.go('home')" id="link-home">Головна</a>
             <a onclick="Router.go('timeline')" id="link-timeline">Хронологія</a>
             <a onclick="Router.go('glossary')" id="link-glossary">Словник</a>
             <a onclick="Router.go('quiz')" id="link-quiz">Тести</a>
+            <a onclick="Router.go('leaderboard')" id="link-leaderboard">Рейтинг</a>
             <a onclick="Router.go('admin')" id="link-admin" style="display:none">Адмін</a>
         </div>
         <div style="display:flex; align-items:center; gap:10px">
             <div class="user-badge" id="user-initials" onclick="Router.go('profile')" style="cursor:pointer" title="Профіль">?</div>
-            <a onclick="Auth.logout()" style="color:#f8d7da; font-size:0.8rem; cursor:pointer">Вийти</a>
+            <a onclick="Auth.logout()" class="desktop-logout" style="color:#f8d7da; font-size:0.8rem; cursor:pointer">Вийти</a>
+            <button class="hamburger" id="hamburger-btn" onclick="MobileMenu.toggle()" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
+    <div class="mobile-menu" id="mobile-menu">
+        <a onclick="Router.go('home'); MobileMenu.close()" id="mob-link-home">Головна</a>
+        <a onclick="Router.go('timeline'); MobileMenu.close()" id="mob-link-timeline">Хронологія</a>
+        <a onclick="Router.go('glossary'); MobileMenu.close()" id="mob-link-glossary">Словник</a>
+        <a onclick="Router.go('quiz'); MobileMenu.close()" id="mob-link-quiz">Тести</a>
+        <a onclick="Router.go('leaderboard'); MobileMenu.close()" id="mob-link-leaderboard">Рейтинг</a>
+        <a onclick="Router.go('admin'); MobileMenu.close()" id="mob-link-admin" style="display:none">Адмін</a>
+        <a onclick="Router.go('profile'); MobileMenu.close()">Профіль</a>
+        <a class="mob-logout" onclick="Auth.logout(); MobileMenu.close()">Вийти</a>
+    </div>
 </header>
 
 <!-- ===== LOGIN ===== -->
-<section id="page-login" class="page active" style="background: linear-gradient(rgba(0,0,0,0.68),rgba(0,0,0,0.68)), url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/1200px-Euromaidan_collage.jpg') center/cover;">
+<section id="page-login" class="page active">
     <div class="auth-card">
         <h2 style="text-align:center; margin-bottom:20px; color:var(--ink)">Вітаємо</h2>
         <div class="auth-tabs">
@@ -373,6 +477,23 @@
         <button class="btn btn-gold" onclick="Quiz.start()" style="margin-top:20px">Ще раз</button>
         <button class="btn btn-outline" onclick="Router.go('home')" style="margin-top:10px">На головну</button>
     </div>
+</section>
+
+<!-- ===== LEADERBOARD ===== -->
+<section id="page-leaderboard" class="page">
+    <div class="lb-header-row">
+        <div>
+            <h2>Таблиця лідерів</h2>
+            <p style="margin-top:6px; opacity:0.6; font-size:0.95rem">Найкращий результат кожного учасника</p>
+        </div>
+        <div id="lb-my-rank-badge" style="display:none" class="lb-my-rank"></div>
+    </div>
+    <div style="background:white; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.07); overflow:hidden; margin-top:16px">
+        <div id="leaderboard-content"></div>
+    </div>
+    <p style="margin-top:16px; font-size:0.85rem; opacity:0.5; text-align:center">
+        Оновлюється автоматично після кожного проходження тесту
+    </p>
 </section>
 
 <!-- ===== GLOSSARY ===== -->
@@ -610,6 +731,21 @@ var DB = {
     }
 };
 
+// ===================== МОБІЛЬНЕ МЕНЮ =====================
+
+var MobileMenu = {
+    toggle: function() {
+        var btn  = document.getElementById('hamburger-btn');
+        var menu = document.getElementById('mobile-menu');
+        btn.classList.toggle('open');
+        menu.classList.toggle('open');
+    },
+    close: function() {
+        document.getElementById('hamburger-btn').classList.remove('open');
+        document.getElementById('mobile-menu').classList.remove('open');
+    }
+};
+
 // ===================== АВТОРИЗАЦІЯ =====================
 
 var Auth = {
@@ -657,7 +793,8 @@ var Auth = {
         document.getElementById('page-login').classList.remove('active');
         document.getElementById('main-header').style.display = 'block';
         document.getElementById('user-initials').innerText = user.getInitials();
-        document.getElementById('link-admin').style.display = user.isAdmin() ? 'block' : 'none';
+        document.getElementById('link-admin').style.display     = user.isAdmin() ? 'block' : 'none';
+        document.getElementById('mob-link-admin').style.display = user.isAdmin() ? 'block' : 'none';
         Router.go('home');
     },
 
@@ -684,11 +821,12 @@ var Router = {
 
         window.scrollTo(0, 0);
 
-        if (page === 'home')     Home.render();
-        if (page === 'timeline') TL.render('all');
-        if (page === 'glossary') Gloss.render();
-        if (page === 'profile')  Profile.render();
-        if (page === 'admin')    Admin.render();
+        if (page === 'home')        Home.render();
+        if (page === 'timeline')    TL.render('all');
+        if (page === 'glossary')    Gloss.render();
+        if (page === 'profile')     Profile.render();
+        if (page === 'admin')       Admin.render();
+        if (page === 'leaderboard') Leaderboard.render();
     }
 };
 
@@ -937,6 +1075,94 @@ var Quiz = {
 
         var desc = pct >= 80 ? 'Чудово! Ви справжній знавець.' : pct >= 50 ? 'Непогано, є над чим попрацювати.' : 'Варто ще повчити матеріал.';
         document.getElementById('res-desc').innerText = desc;
+    }
+};
+
+// ===================== ТАБЛИЦЯ ЛІДЕРІВ =====================
+
+var Leaderboard = {
+    render: function() {
+        var user    = Auth.currentUser;
+        var results = DB.get('quiz_results');
+        var users   = DB.get('users');
+
+        // Знаходимо найкращий результат для кожного userId
+        var bestMap = {};
+        results.forEach(function(r) {
+            if (r.userId === 0) return; // пропускаємо гостей
+            if (!bestMap[r.userId] || r.pct > bestMap[r.userId].pct) {
+                bestMap[r.userId] = r;
+            }
+        });
+
+        // Збираємо рядки з іменами
+        var rows = [];
+        Object.keys(bestMap).forEach(function(uid) {
+            var r    = bestMap[uid];
+            var u    = users.find(function(u) { return u.id === parseInt(uid); });
+            var name = u ? u.name : 'Користувач #' + uid;
+            // Підраховуємо кількість спроб
+            var attempts = results.filter(function(x) { return x.userId === parseInt(uid); }).length;
+            rows.push({ userId: parseInt(uid), name: name, pct: r.pct, score: r.score, total: r.total, time: r.time, date: r.date, attempts: attempts });
+        });
+
+        // Сортуємо за найкращим відсотком, потім за кількістю правильних
+        rows.sort(function(a, b) {
+            if (b.pct !== a.pct) return b.pct - a.pct;
+            return b.score - a.score;
+        });
+
+        var myRank = -1;
+        var html   = '';
+
+        if (!rows.length) {
+            html = '<div class="lb-empty">Поки що ніхто не проходив тест.<br>Будьте першим!</div>';
+            document.getElementById('lb-my-rank-badge').style.display = 'none';
+        } else {
+            html = '<table class="lb-table">' +
+                '<thead><tr>' +
+                '<th style="width:50px" class="center">#</th>' +
+                '<th>Учасник</th>' +
+                '<th class="center">Найкращий результат</th>' +
+                '<th class="center hide-mob">Спроб</th>' +
+                '<th class="center hide-mob">Остання дата</th>' +
+                '</tr></thead><tbody>';
+
+            rows.forEach(function(row, i) {
+                var rank  = i + 1;
+                var isMe  = (row.userId === user.id);
+                if (isMe) myRank = rank;
+
+                var rankClass = rank === 1 ? 'gold' : rank === 2 ? 'silver' : rank === 3 ? 'bronze' : 'other';
+                var rankLabel = rank === 1 ? '🏆' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : rank;
+
+                var scoreClass = row.pct >= 80 ? 'lb-score-high' : row.pct >= 50 ? 'lb-score-mid' : 'lb-score-low';
+
+                var initials = row.name.split(' ').map(function(w){ return w[0]; }).join('').slice(0,2).toUpperCase();
+
+                html += '<tr class="' + (isMe ? 'lb-me' : '') + '">' +
+                    '<td class="center"><span class="lb-rank ' + rankClass + '">' + rankLabel + '</span></td>' +
+                    '<td><span class="lb-avatar">' + initials + '</span>' +
+                    '<span class="lb-name">' + row.name + (isMe ? ' (ви)' : '') + '</span></td>' +
+                    '<td class="center"><span class="lb-score-badge ' + scoreClass + '">' + row.pct + '%</span>' +
+                    ' <span style="opacity:0.5; font-size:0.85rem">(' + row.score + '/' + row.total + ')</span></td>' +
+                    '<td class="center hide-mob" style="opacity:0.7">' + row.attempts + '</td>' +
+                    '<td class="center hide-mob" style="opacity:0.6; font-size:0.9rem">' + row.date + '</td>' +
+                    '</tr>';
+            });
+
+            html += '</tbody></table>';
+
+            var badge = document.getElementById('lb-my-rank-badge');
+            if (myRank > 0 && user.id !== 0) {
+                badge.style.display = 'block';
+                badge.innerText = 'Ваше місце: ' + myRank + ' з ' + rows.length;
+            } else {
+                badge.style.display = 'none';
+            }
+        }
+
+        document.getElementById('leaderboard-content').innerHTML = html;
     }
 };
 
