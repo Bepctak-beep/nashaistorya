@@ -115,7 +115,7 @@
             padding: 0 !important;
             margin: 0 !important;
             background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-                        url('images/sofia-hero.jpg') center/cover no-repeat !important;
+                        url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Saint_Sophia%27s_Cathedral_in_Kyiv.jpg/1200px-Saint_Sophia%27s_Cathedral_in_Kyiv.jpg') center/cover no-repeat !important;
             z-index: 200; display: none; align-items: center; justify-content: center;
         }
         #page-login.active { display: flex !important; }
@@ -214,7 +214,7 @@
         .profile-hero {
             background:
                 linear-gradient(rgba(0,60,130,0.88), rgba(0,60,130,0.88)),
-                url('images/sofia-hero.jpg') center/cover;
+                url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg/1200px-80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg') center/cover;
             border-radius: 14px; padding: 36px 20px 28px; text-align: center;
             margin-bottom: 30px; position: relative; overflow: hidden;
         }
@@ -318,7 +318,7 @@
         .quiz-banner {
             background:
                 linear-gradient(rgba(0,40,100,0.9), rgba(0,40,100,0.9)),
-                url('images/ev-11.jpg') center/cover;
+                url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/800px-Euromaidan_collage.jpg') center/cover;
             border-radius: 14px; padding: 40px 30px; text-align: center; margin-bottom: 20px;
             position: relative; overflow: hidden;
         }
@@ -379,7 +379,7 @@
         .hero {
             background:
                 linear-gradient(rgba(0,60,130,0.82), rgba(0,60,130,0.82)),
-                url('images/sofia-hero.jpg')
+                url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg/1200px-80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg')
                 center/cover !important;
         }
 
@@ -642,7 +642,7 @@
 <section id="page-glossary" class="page">
     <h2>Словник термінів</h2>
     <img class="gloss-header-img"
-         src="images/ev-4.jpg"
+         src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg/1200px-Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg"
          alt="Запорожці пишуть листа турецькому султану — І. Рєпін"
          onerror="this.style.display='none'">
     <input type="text" id="gloss-search" placeholder="Пошук терміну або значення..." oninput="Gloss.search(this.value)">
@@ -854,7 +854,7 @@ var DB = {
         return r.length ? Math.max.apply(null, r.map(function(x){ return x.id || 0; })) + 1 : 1;
     },
     init: function() {
-        var DATA_VERSION = '5';
+        var DATA_VERSION = '4';
         if (localStorage.getItem('nh_data_version') !== DATA_VERSION) {
             ['nh_events','nh_questions','nh_glossary'].forEach(function(k){ localStorage.removeItem(k); });
             localStorage.setItem('nh_data_version', DATA_VERSION);
@@ -918,62 +918,62 @@ var DB = {
                 {id:1,  q:'Хто охрестив Київську Русь у 988 році?',
                  opts:['Святослав Хоробрий','Володимир Великий','Ярослав Мудрий','Княгиня Ольга'], ans:1,
                  explain:'Князь Володимир прийняв хрещення у Херсонесі та охрестив киян у річці Почайна у 988 році. Цю подію зображено на відомій картині К. В. Лебедєва.',
-                 img:'images/ev-3.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Lebedev_baptism.jpg/600px-Lebedev_baptism.jpg',
                  imgCaption:'Хрещення киян — картина К. В. Лебедєва (1913)'},
                 {id:2,  q:'Який гетьман очолив визвольне повстання 1648 року і заснував Козацьку державу?',
                  opts:['Іван Мазепа','Петро Сагайдачний','Богдан Хмельницький','Пилип Орлик'], ans:2,
                  explain:'Богдан Хмельницький очолив визвольну війну проти Речі Посполитої. Перемоги під Жовтими Водами та Корсунем привели до утворення Гетьманщини.',
-                 img:'images/ev-5.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Bohdan_Khmelnytsky_%28Portrait%2C_sec._half_17th_century%2C_Chernihiv_Historical_Museum%29_%28cropped%29.jpg/400px-Bohdan_Khmelnytsky_%28Portrait%2C_sec._half_17th_century%2C_Chernihiv_Historical_Museum%29_%28cropped%29.jpg',
                  imgCaption:'Портрет Богдана Хмельницького (XVII ст., Чернігівський музей)'},
                 {id:3,  q:'Коли Катерина II знищила Запорозьку Січ?',
                  opts:['1648','1709','1775','1791'], ans:2,
                  explain:'У червні 1775 р. генерал Текелій оточив Запорозьку Січ зі 100-тисячним військом. Козаки не чинили опору. Кошового Калнишевського заслали до Соловків.',
-                 img:'images/ev-4.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg/600px-Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg',
                  imgCaption:'Запорожці пишуть листа турецькому султану — І. Рєпін (1891)'},
                 {id:4,  q:'Ким за соціальним походженням народився Тарас Шевченко?',
                  opts:['Міщанином','Дворянином','Кріпаком','Духовного сану'], ans:2,
                  explain:'Шевченко народився кріпаком у с. Моринці. У 1838 р. його викупив художник Карл Брюллов разом із поетом Василем Жуковським.',
-                 img:'images/ev-7.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg/400px-%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg',
                  imgCaption:'Тарас Шевченко. Фото К. Козловського, Петербург, 1859 р.'},
                 {id:5,  q:'Який відсоток українців підтримав незалежність на референдумі 1 грудня 1991 р.?',
                  opts:['75,2%','84,1%','90,3%','92,3%'], ans:3,
                  explain:'Понад 92% громадян у всіх областях України, включаючи Крим (54%), підтримали незалежність. Того ж дня Кравчук переміг на президентських виборах.',
-                 img:'images/ev-9.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Declaration_of_Independence_of_Ukraine%2C_1991.jpg/600px-Declaration_of_Independence_of_Ukraine%2C_1991.jpg',
                  imgCaption:'Акт проголошення незалежності України, 24 серпня 1991 р.'},
                 {id:6,  q:'Яку назву мала перша демократична конституція України 1710 р.?',
                  opts:['Руська Правда','Березневі статті','Конституція Пилипа Орлика','Гадяцький договір'], ans:2,
                  explain:'Конституція Пилипа Орлика 1710 р. — одна з перших конституцій у світі. Вона обмежувала владу гетьмана і закріплювала права козацтва.',
-                 img:'images/q-orlyk.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Pylyp_Orlyk.jpg/400px-Pylyp_Orlyk.jpg',
                  imgCaption:'Пилип Орлик — автор першої демократичної конституції (1710)'},
                 {id:7,  q:'Де народився Тарас Шевченко?',
                  opts:['Переяслав','Канів','Моринці','Кирилівка'], ans:2,
                  explain:'Шевченко народився у с. Моринці на Звенигородщині (нині Черкаська обл.) у 1814 р. Нині тут діє музей-заповідник.',
-                 img:'images/ev-7.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg/400px-%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg',
                  imgCaption:'Тарас Шевченко — фото 1859 р.'},
                 {id:8,  q:'Яка подія у листопаді 2013 р. поклала початок Революції Гідності?',
                  opts:['Відмова від угоди про асоціацію з ЄС','Вбивство журналіста Гонгадзе','Газова криза з Росією','Президентські вибори 2010 р.'], ans:0,
                  explain:'Уряд Азарова призупинив переговори щодо Угоди про асоціацію з ЄС. Вже цієї ж ночі перші студенти вийшли на Майдан із наметами.',
-                 img:'images/ev-11.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/600px-Euromaidan_collage.jpg',
                  imgCaption:'Євромайдан — Революція Гідності 2013–2014 рр.'},
                 {id:9,  q:'Яка унікальна прикраса скіфського царя IV ст. до н.е. зберігається в Національному музеї в Києві?',
                  opts:['Золота діадема','Золота Пектораль','Срібна фіала','Скіфська корона'], ans:1,
                  explain:'Золота Пектораль вагою 1150 г знайдена у 1971 р. у кургані Товста Могила на Дніпропетровщині. Вона зображує сцени козацького побуту та фантастичних тварин.',
-                 img:'images/ev-1.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Pectoral_from_the_Tolstaya_Mogila_Kurgan.jpg/600px-Pectoral_from_the_Tolstaya_Mogila_Kurgan.jpg',
                  imgCaption:'Золота Пектораль зі скіфського кургану Товста Могила (IV ст. до н.е.)'},
                 {id:10, q:'Скільки мільйонів українців за різними підрахунками загинули під час Голодомору 1932–33 рр.?',
                  opts:['До 1 мільйона','1–2 мільйони','3,5–7 мільйонів','Понад 10 мільйонів'], ans:2,
                  explain:'За оцінками демографів, жертвами Голодомору стали від 3,5 до 7 мільйонів українців. Особливо постраждали центральні й східні регіони — Харківщина, Полтавщина, Київщина.',
-                 img:'images/ev-8.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/HolodomorKharkiv_1933_Wienerberger.jpg/600px-HolodomorKharkiv_1933_Wienerberger.jpg',
                  imgCaption:'Харків, 1933 рік. Фото А. Вінербергера — рідкісне свідчення Голодомору'},
                 {id:11, q:'Хто збудував собор Святої Софії у Києві?',
                  opts:['Князь Олег','Князь Володимир Великий','Ярослав Мудрий','Данило Галицький'], ans:2,
                  explain:'Собор Святої Софії зведений за наказом Ярослава Мудрого у 1037 р. як символ могутності Київської Русі. З 1990 р. він є об\'єктом Всесвітньої спадщини ЮНЕСКО.',
-                 img:'images/ev-2.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg/600px-80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg',
                  imgCaption:'Собор Святої Софії у Києві — збудований Ярославом Мудрим у 1037 р.'},
                 {id:12, q:'Якого року відбулася Помаранчева революція в Україні?',
                  opts:['2000','2002','2004','2006'], ans:2,
                  explain:'Помаранчева революція відбулася наприкінці 2004 р. після фальсифікації президентських виборів. Переголосування 26 грудня 2004 р. принесло перемогу Ющенку.',
-                 img:'images/ev-10.jpg',
+                 img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Morning_first_day_of_Orange_Revolution.jpg/600px-Morning_first_day_of_Orange_Revolution.jpg',
                  imgCaption:'Ранок першого дня Помаранчевої революції на Майдані, листопад 2004 р.'}
             ]);
         }
@@ -1100,17 +1100,61 @@ var Router = {
 // thumb — мініатюра на картці (≈330px), full — для розгорнутого перегляду (оригінал)
 
 var EVENT_IMAGES = {
-    1:  { thumb: 'images/ev-1.jpg',  full: 'images/ev-1.jpg',  caption: 'Золота пектораль із кургану Товста Могила (IV ст. до н.е.)' },
-    2:  { thumb: 'images/ev-2.jpg',  full: 'images/ev-2.jpg',  caption: 'Собор Святої Софії у Києві, збудований за часів Ярослава Мудрого' },
-    3:  { thumb: 'images/ev-3.jpg',  full: 'images/ev-3.jpg',  caption: 'Хрещення киян — картина К. В. Лебедєва' },
-    4:  { thumb: 'images/ev-4.jpg',  full: 'images/ev-4.jpg',  caption: 'Запорожці пишуть листа турецькому султану — І. Ю. Рєпін (1891)' },
-    5:  { thumb: 'images/ev-5.jpg',  full: 'images/ev-5.jpg',  caption: 'Портрет Богдана Хмельницького (друга пол. XVII ст., Чернігівський музей)' },
-    6:  { thumb: 'images/ev-6.jpg',  full: 'images/ev-6.jpg',  caption: 'Остання рада на Запорозькій Січі — В. Ковальов (сер. XIX ст.)' },
-    7:  { thumb: 'images/ev-7.jpg',  full: 'images/ev-7.jpg',  caption: 'Тарас Шевченко. Фото К. Козловського, Петербург, травень 1859 р.' },
-    8:  { thumb: 'images/ev-8.jpg',  full: 'images/ev-8.jpg',  caption: 'Харків, 1933 рік. Фото А. Вінербергера — одне з небагатьох свідчень Голодомору' },
-    9:  { thumb: 'images/ev-9.jpg',  full: 'images/ev-9.jpg',  caption: 'Акт проголошення незалежності України, підписаний 24 серпня 1991 року' },
-    10: { thumb: 'images/ev-10.jpg', full: 'images/ev-10.jpg', caption: 'Ранок першого дня Помаранчевої революції на Майдані Незалежності, 2004' },
-    11: { thumb: 'images/ev-11.jpg', full: 'images/ev-11.jpg', caption: 'Євромайдан — колаж подій Революції Гідності 2013–2014 рр.' }
+    1:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Pectoral_from_the_Tolstaya_Mogila_Kurgan.jpg/330px-Pectoral_from_the_Tolstaya_Mogila_Kurgan.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/8/87/Pectoral_from_the_Tolstaya_Mogila_Kurgan.jpg',
+        caption: 'Золота пектораль із кургану Товста Могила (IV ст. до н.е.)'
+    },
+    2:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg/330px-80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/6/61/80-391-0151_Kyiv_St.Sophia%27s_Cathedral_RB_18_2_%28cropped%29.jpg',
+        caption: 'Собор Святої Софії у Києві, збудований за часів Ярослава Мудрого'
+    },
+    3:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Lebedev_baptism.jpg/330px-Lebedev_baptism.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/9/9f/Lebedev_baptism.jpg',
+        caption: 'Хрещення киян — картина К. В. Лебедєва'
+    },
+    4:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg/330px-Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/7/79/Ilja_Jefimowitsch_Repin_-_Reply_of_the_Zaporozhian_Cossacks_-_Yorck.jpg',
+        caption: 'Запорожці пишуть листа турецькому султану — І. Ю. Рєпін (1891)'
+    },
+    5:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Bohdan_Khmelnytsky_%28Portrait%2C_sec._half_17th_century%2C_Chernihiv_Historical_Museum%29_%28cropped%29.jpg/330px-Bohdan_Khmelnytsky_%28Portrait%2C_sec._half_17th_century%2C_Chernihiv_Historical_Museum%29_%28cropped%29.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/3/3f/Bohdan_Khmelnytsky_%28Portrait%2C_sec._half_17th_century%2C_Chernihiv_Historical_Museum%29_%28cropped%29.jpg',
+        caption: 'Портрет Богдана Хмельницького (друга пол. XVII ст., Чернігівський музей)'
+    },
+    6:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Viktor_Kovalyov_%28mid-19th_century%29_Last_Rada_on_Sich.jpg/330px-Viktor_Kovalyov_%28mid-19th_century%29_Last_Rada_on_Sich.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/0/06/Viktor_Kovalyov_%28mid-19th_century%29_Last_Rada_on_Sich.jpg',
+        caption: 'Остання рада на Запорозькій Січі — В. Ковальов (сер. XIX ст.)'
+    },
+    7:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg/330px-%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/b/b2/%D0%A2._%D0%93._%D0%A8%D0%B5%D0%B2%D1%87%D0%B5%D0%BD%D0%BA%D0%BE._%D0%9A%D0%B2%D1%96%D1%82%D0%B5%D0%BD%D1%8C_1859.jpg',
+        caption: 'Тарас Шевченко. Фото К. Козловського, Петербург, травень 1859 р.'
+    },
+    8:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/27/HolodomorKharkiv_1933_Wienerberger.jpg/330px-HolodomorKharkiv_1933_Wienerberger.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/2/27/HolodomorKharkiv_1933_Wienerberger.jpg',
+        caption: 'Харків, 1933 рік. Фото А. Вінербергера — одне з небагатьох свідчень Голодомору'
+    },
+    9:  {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Declaration_of_Independence_of_Ukraine%2C_1991.jpg/330px-Declaration_of_Independence_of_Ukraine%2C_1991.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/1/18/Declaration_of_Independence_of_Ukraine%2C_1991.jpg',
+        caption: 'Акт проголошення незалежності України, підписаний 24 серпня 1991 року'
+    },
+    10: {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Morning_first_day_of_Orange_Revolution.jpg/330px-Morning_first_day_of_Orange_Revolution.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/f/f8/Morning_first_day_of_Orange_Revolution.jpg',
+        caption: 'Ранок першого дня Помаранчевої революції на Майдані Незалежності, 2004'
+    },
+    11: {
+        thumb: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Euromaidan_collage.jpg/330px-Euromaidan_collage.jpg',
+        full:  'https://upload.wikimedia.org/wikipedia/commons/5/53/Euromaidan_collage.jpg',
+        caption: 'Євромайдан — колаж подій Революції Гідності 2013–2014 рр.'
+    }
 };
 
 function getEvThumb(ev) {
